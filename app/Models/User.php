@@ -15,10 +15,15 @@ use Laravel\Fortify\Contracts\PasskeyUser;
 use Laravel\Fortify\PasskeyAuthenticatable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
+/** @phpstan-type UserRole 'customer'|'tenant'|'admin' */
+/** @phpstan-type UserStatus 'pending'|'active'|'suspended' */
+
 /**
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string $role
+ * @property string $status
  * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $two_factor_secret
@@ -28,7 +33,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'role', 'status'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements PasskeyUser
 {
@@ -46,6 +51,20 @@ class User extends Authenticatable implements PasskeyUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function defaultRoute(): string
+    {
+        return match ($this->role) {
+            'tenant' => '/tenant/dashboard',
+            'admin' => '/admin/dashboard',
+            default => '/',
+        };
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === 'active';
     }
 
     /**
