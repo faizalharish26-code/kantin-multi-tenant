@@ -2,13 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified'])
-    ->name('dashboard')
-    ->get('/dashboard', function () {
-        return view('dashboard');
-    });
+Route::view('/', 'welcome')->name('home');
 
-require __DIR__.'/customer.php';
-require __DIR__.'/tenant.php';
-require __DIR__.'/admin.php';
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::view('dashboard', 'dashboard')->name('dashboard');
+});
+
 require __DIR__.'/settings.php';

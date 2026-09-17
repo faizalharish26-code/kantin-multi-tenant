@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Modules\Reporting;
+namespace App\Modules\Payments;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Modul: Reporting.
- * Tanggung jawab: Laporan scoped, rekonsiliasi, ekspor async, withdrawal (Modul 13).
+ * Modul: Payments.
+ * Tanggung jawab: Kontrak PaymentGateway, adapter, webhook, settlement, split ledger, outbox (Modul 10-11).
  *
  * Titik perakitan modul (modular monolith): binding container di register(),
  * route/event/policy di boot(). Batas antarmodul ditegakkan lewat kontrak & event,
  * bukan akses langsung tabel/controller modul lain.
  */
-final class ReportingServiceProvider extends ServiceProvider
+final class PaymentsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

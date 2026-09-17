@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Modules\Reporting;
+namespace App\Modules\Catalog;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Modul: Reporting.
- * Tanggung jawab: Laporan scoped, rekonsiliasi, ekspor async, withdrawal (Modul 13).
+ * Modul: Catalog.
+ * Tanggung jawab: Kategori, menu, modifier, stok tenant, dan public catalog (Modul 7).
  *
  * Titik perakitan modul (modular monolith): binding container di register(),
  * route/event/policy di boot(). Batas antarmodul ditegakkan lewat kontrak & event,
  * bukan akses langsung tabel/controller modul lain.
  */
-final class ReportingServiceProvider extends ServiceProvider
+final class CatalogServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

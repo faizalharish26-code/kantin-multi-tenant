@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified', 'can:accessAdmin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        Route::view('/dashboard', 'dashboard')->name('dashboard');
-        Route::view('/users', 'dashboard')->name('users');
-    });
+/**
+ * Konteks PENGELOLA KANTIN (internal). Prefix: admin, name: admin.*
+ * Middleware auth+verified+role:admin dipasang di bootstrap/app.php.
+ * Administrasi tenant/role/komisi diisi Modul 5.
+ */
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+})->name('dashboard');
